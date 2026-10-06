@@ -3,124 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Admin - NutriVida</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <title>Admin - Control Total</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#"><i class="bi bi-shield-lock me-2"></i>Admin - Control Total</a>
-            <a href="login.html" class="btn btn-outline-light btn-sm"><i class="bi bi-box-arrow-right me-1"></i> Salir</a>
+            <a class="navbar-brand" href="#">Admin - Control Total</a>
+            <a href="login.html" class="btn btn-outline-light btn-sm">Salir</a>
         </div>
     </nav>
 
     <main class="container my-5">
-        
-        <!-- ESTADÍSTICAS BÁSICAS DE LA CLÍNICA -->
-        <h4 class="fw-bold text-dark mb-4"><i class="bi bi-bar-chart-line-fill me-2"></i>Estadísticas Globales de la Clínica (Mes Actual)</h4>
-        <div class="row text-center mb-5">
+        <h3 class="mb-4">Estadísticas Globales de la Clínica (Mes Actual)</h3>
+        <div class="row mb-5 text-center">
             <div class="col-md-4 mb-3">
-                <div class="card card-custom p-4 border-start border-success border-4 h-100">
-                    <h6 class="text-muted">Atenciones por Período</h6>
-                    <h2 class="fw-bold text-success mb-0">145</h2>
+                <div class="card-custom p-4">
+                    <h2 class="text-primary">145</h2>
+                    <p class="mb-0">Atenciones por Período</p>
                     <small class="text-muted">Citas completadas este mes</small>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
-                <div class="card card-custom p-4 border-start border-danger border-4 h-100">
-                    <h6 class="text-muted">Tasa de Inasistencia</h6>
-                    <h2 class="fw-bold text-danger mb-0">12%</h2>
+                <div class="card-custom p-4">
+                    <h2 class="text-danger">12%</h2>
+                    <p class="mb-0">Tasa de Inasistencia</p>
                     <small class="text-muted">Pacientes que no se presentaron</small>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
-                <div class="card card-custom p-4 border-start border-primary border-4 h-100 text-start">
-                    <h6 class="text-muted text-center mb-3">Distribución por Nutricionista</h6>
-                    <div class="mb-2">
-                        <small>Dra. González (45%)</small>
-                        <div class="progress" style="height: 10px;">
-                            <div class="progress-bar bg-success" style="width: 45%;"></div>
-                        </div>
-                    </div>
-                    <div class="mb-2">
-                        <small>Dr. Rojas (35%)</small>
-                        <div class="progress" style="height: 10px;">
-                            <div class="progress-bar bg-primary" style="width: 35%;"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <small>Dra. Silva (20%)</small>
-                        <div class="progress" style="height: 10px;">
-                            <div class="progress-bar bg-warning" style="width: 20%;"></div>
-                        </div>
-                    </div>
+                <div class="card-custom p-4">
+                    <h5 class="text-success">Distribución por Nutricionista</h5>
+                    <p class="mb-0 small">Dra. González (45%) | Dr. Rojas (35%) | Dra. Silva (20%)</p>
                 </div>
             </div>
         </div>
 
-        <!-- GESTIÓN DE USUARIOS Y ROLES (RBAC) -->
-        <div class="card card-custom p-4 mb-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="fw-bold text-nutri m-0"><i class="bi bi-people-fill me-2"></i>Gestión de Usuarios y Roles</h5>
-                <button class="btn btn-success btn-sm"><i class="bi bi-plus-circle me-1"></i> Crear Nuevo Usuario</button>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4>Gestión de Usuarios y Roles</h4>
+            <div>
+                <!-- SUMA DEL BOTÓN DE AUSENCIAS -->
+                <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#modalAusencias">
+                    Gestionar Ausencias
+                </button>
+                <button class="btn btn-success">Crear Nuevo Usuario</button>
             </div>
-            
-            <div class="table-responsive">
-                <table class="table table-hover align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Foto</th>
-                            <th>Usuario</th>
-                            <th>Correo</th>
-                            <th>Rol</th>
-                            <th>Estado</th>
-                            <th>Control Administrador</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><img src="../img/1nutri.jpg" class="avatar-sm" alt="Dra. María González"></td>
-                            <td class="fw-bold">Dra. María González</td>
-                            <td>m.gonzalez@nutrivida.cl</td>
-                            <td><span class="badge bg-primary">Nutricionista</span></td>
-                            <td><span class="badge bg-success badge-status">Activo</span></td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-primary" onclick="alert('Editar permisos del usuario')"><i class="bi bi-pencil"></i></button>
-                                <button class="btn btn-sm btn-outline-danger" onclick="alternarEstadoUsuario(this)">Desactivar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><img src="../img/2nutri.png" class="avatar-sm" alt="Dr. Carlos Rojas"></td>
-                            <td class="fw-bold">Dr. Carlos Rojas</td>
-                            <td>c.rojas@nutrivida.cl</td>
-                            <td><span class="badge bg-primary">Nutricionista</span></td>
-                            <td><span class="badge bg-success badge-status">Activo</span></td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-primary" onclick="alert('Editar permisos del usuario')"><i class="bi bi-pencil"></i></button>
-                                <button class="btn btn-sm btn-outline-danger" onclick="alternarEstadoUsuario(this)">Desactivar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><i class="bi bi-person-circle fs-3 text-secondary"></i></td>
-                            <td class="fw-bold">Camila Silva</td>
-                            <td>camila.silva@gmail.com</td>
-                            <td><span class="badge bg-info text-dark">Paciente</span></td>
-                            <td><span class="badge bg-success badge-status">Activo</span></td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-primary" onclick="alert('Editar permisos del usuario')"><i class="bi bi-pencil"></i></button>
-                                <button class="btn btn-sm btn-outline-danger" onclick="alternarEstadoUsuario(this)">Desactivar</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        </div>
+
+        <div class="table-responsive bg-white p-3 rounded shadow-sm">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Foto</th>
+                        <th>Usuario</th>
+                        <th>Correo</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                        <th>Control</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><div class="avatar-sm bg-secondary"></div></td>
+                        <td>Dra. María González</td>
+                        <td>m.gonzalez@nutrivida.cl</td>
+                        <td>Nutricionista</td>
+                        <td><span class="badge bg-success badge-status">Activo</span></td>
+                        <td><button class="btn btn-sm btn-outline-danger" onclick="alternarEstadoUsuario(this)">Desactivar</button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="avatar-sm bg-secondary"></div></td>
+                        <td>Dr. Carlos Rojas</td>
+                        <td>c.rojas@nutrivida.cl</td>
+                        <td>Nutricionista</td>
+                        <td><span class="badge bg-success badge-status">Activo</span></td>
+                        <td><button class="btn btn-sm btn-outline-danger" onclick="alternarEstadoUsuario(this)">Desactivar</button></td>
+                    </tr>
+                    <tr>
+                        <td><div class="avatar-sm bg-secondary"></div></td>
+                        <td>Camila Silva</td>
+                        <td>camila.silva@gmail.com</td>
+                        <td>Paciente</td>
+                        <td><span class="badge bg-success badge-status">Activo</span></td>
+                        <td><button class="btn btn-sm btn-outline-danger" onclick="alternarEstadoUsuario(this)">Desactivar</button></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- SUMA DEL MODAL DE AUSENCIAS DE NUTRICIONISTAS -->
+    <div class="modal fade" id="modalAusencias" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Registrar Ausencia / Reprogramar</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nutricionista:</label>
+                        <select id="ausenciaNutri" class="form-select">
+                            <option>Dra. María González</option>
+                            <option>Dr. Carlos Rojas</option>
+                            <option>Dra. Andrea Silva</option>
+                            <option>Dr. Felipe Morales</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Fecha de inasistencia:</label>
+                        <input type="date" id="ausenciaFecha" class="form-control">
+                    </div>
+                    <button class="btn btn-primary w-100" onclick="registrarAusencia()">Registrar y Liberar Agenda</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/funciones.js"></script>
 </body>
 </html>

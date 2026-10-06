@@ -3,101 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Médico - NutriVida</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <title>Portal Médico | NutriVida</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-nutri">
+    <nav class="navbar navbar-dark bg-nutri">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#"><i class="bi bi-stethoscope me-2"></i>Portal Médico: Dra. María González</a>
-            <a href="login.html" class="btn btn-outline-light btn-sm"><i class="bi bi-box-arrow-right me-1"></i> Salir</a>
+            <a class="navbar-brand" href="#">Portal Médico: Dra. María González</a>
+            <a href="login.html" class="btn btn-outline-light btn-sm">Salir</a>
         </div>
     </nav>
 
-    <main class="container my-4">
-        <div class="card card-custom p-4 mb-4 border-start border-success border-4">
-            <h5 class="fw-bold text-dark mb-3"><i class="bi bi-calendar-event me-2"></i>Mi Agenda de Hoy (Pacientes Asignados)</h5>
-            <div class="table-responsive">
-                <table class="table table-sm align-middle text-center">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Hora</th>
-                            <th>Paciente</th>
-                            <th>Motivo</th>
-                            <th>Estado</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>10:00 hrs</td>
-                            <td class="fw-bold">Camila Silva</td>
-                            <td>Control Mensual</td>
-                            <td><span class="badge bg-warning text-dark">Por Atender</span></td>
-                            <td><button class="btn btn-sm btn-success" onclick="document.getElementById('selectPacienteMedico').value='Camila Silva'">Iniciar Atención</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
+    <main class="container my-5">
         <div class="row">
-            <div class="col-lg-5 mb-4">
-                <div class="card card-custom p-4">
-                    <h5 class="fw-bold text-nutri mb-3"><i class="bi bi-journal-plus me-2"></i>Registrar Ficha Clínica</h5>
+            <!-- Columna Izquierda: Agenda y Registro de Ficha -->
+            <div class="col-md-5 mb-4">
+                <div class="card-custom p-4 mb-4">
+                    <h4>Mi Agenda de Hoy (Pacientes Asignados)</h4>
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Hora</th>
+                                    <th>Paciente</th>
+                                    <th>Motivo</th>
+                                    <th>Estado</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>10:00 hrs</td>
+                                    <td>Camila Silva</td>
+                                    <td>Control Mensual</td>
+                                    <td><span class="badge bg-warning text-dark">Por Atender</span></td>
+                                    <td><button class="btn btn-sm btn-success" onclick="iniciarAtencion(this)">Iniciar Atención</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card-custom p-4">
+                    <h4>Registrar Ficha Clínica</h4>
                     <form id="formEvaluacionMedico" onsubmit="agregarEvaluacionMedico(event)">
+                        
+                        <!-- CAMBIO REALIZADO: Campo transformado de input de solo lectura a lista desplegable -->
                         <div class="mb-3">
                             <label class="form-label">Paciente Asignado</label>
-                            <input type="text" id="selectPacienteMedico" class="form-control bg-light" placeholder="Seleccione desde la agenda..." required>
+                            <select id="selectPacienteMedico" class="form-select" required>
+                                <option value="">Seleccione un paciente...</option>
+                                <option value="Camila Silva" selected>Camila Silva</option>
+                                <option value="Juan Pérez">Juan Pérez</option>
+                                <option value="María Tapia">María Tapia</option>
+                            </select>
                         </div>
+
                         <div class="row">
-                            <div class="col-4 mb-3">
+                            <div class="col-md-4 mb-3">
                                 <label class="form-label">Peso (kg)</label>
                                 <input type="number" step="0.1" id="inputPeso" class="form-control" required>
                             </div>
-                            <div class="col-4 mb-3">
+                            <div class="col-md-4 mb-3">
                                 <label class="form-label">Talla (cm)</label>
                                 <input type="number" id="inputTalla" class="form-control" required>
                             </div>
-                            <div class="col-4 mb-3">
+                            <div class="col-md-4 mb-3">
                                 <label class="form-label">Cintura (cm)</label>
-                                <input type="number" step="0.1" id="inputCintura" class="form-control" required>
+                                <input type="number" id="inputCintura" class="form-control">
                             </div>
                         </div>
+                        <p class="text-muted small mb-3">IMC Calculado: <strong id="imcPreview" class="text-primary">0.0</strong></p>
+
                         <div class="mb-3">
                             <label class="form-label">Plan Alimenticio / Indicaciones</label>
-                            <textarea id="inputPlanMedico" class="form-control" rows="3" required></textarea>
+                            <textarea class="form-control" id="inputIndicaciones" rows="3" placeholder="3 comidas principales, proteínas altas..."></textarea>
                         </div>
-                        <button type="submit" class="btn btn-nutri w-100"><i class="bi bi-save me-1"></i> Guardar Ficha</button>
+                        <button type="submit" class="btn btn-nutri w-100">Guardar Ficha</button>
                     </form>
                 </div>
             </div>
 
-            <div class="col-lg-7 mb-4">
-                <div class="card card-custom p-4">
-                    <h5 class="fw-bold text-nutri mb-3"><i class="bi bi-folder2-open me-2"></i>Historial de Mis Pacientes</h5>
+            <!-- Columna Derecha: Historial y Lista General de Pacientes -->
+            <div class="col-md-7">
+                <div class="card-custom p-4 mb-4">
+                    <h4>Historial de Mis Pacientes</h4>
+                    <input type="text" id="buscarPaciente" class="form-control mb-3" placeholder="Buscar ficha de paciente en la clínica..." onkeyup="filtrarPacientes()">
+                    
                     <div class="table-responsive">
-                        <table class="table table-hover align-middle text-center small">
-                            <thead class="table-light">
+                        <table class="table table-striped align-middle" id="tablaPacientesMedico">
+                            <thead class="table-success">
                                 <tr>
                                     <th>Paciente</th>
                                     <th>Último Control</th>
                                     <th>IMC</th>
+                                    <th>Atendido por</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody id="tablaPacientesMedico">
+                            <tbody>
                                 <tr>
-                                    <td class="fw-bold">Camila Silva</td>
+                                    <td>Camila Silva</td>
                                     <td>15/09/2026</td>
                                     <td>25.1</td>
+                                    <td><span class="badge bg-secondary">Dra. María González</span></td>
                                     <td>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="alert('Abriendo modo edición')"><i class="bi bi-pencil"></i></button>
-                                        <button class="btn btn-sm btn-outline-success" onclick="alert('Visualizando historial completo en PDF')"><i class="bi bi-eye"></i> Historial</button>
+                                        <button class="btn btn-sm btn-outline-info" onclick="verHistorialPaciente('Camila Silva', '72.5 kg', '25.1', '82 cm', '3 comidas principales, priorizar proteínas, reducir carbohidratos refinados. Tomar 2 litros de agua diarios.', '18.765.432-1', '+56 9 9123 4567', 'camila.silva@gmail.com')">Historial</button>
                                     </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- APARTADO DE LISTA GENERAL DE PACIENTES -->
+                <div class="card-custom p-4">
+                    <h4 class="mb-3">Lista General de Pacientes</h4>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>RUT</th>
+                                    <th>Contacto</th>
+                                    <th>Nutricionista Asignado</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Camila Silva</td>
+                                    <td>18.765.432-1</td>
+                                    <td>+56 9 9123 4567<br><small class="text-muted">camila.silva@gmail.com</small></td>
+                                    <td>Dra. María González</td>
+                                    <td><span class="badge bg-success">Activo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Juan Pérez</td>
+                                    <td>15.432.109-8</td>
+                                    <td>+56 9 8765 4321<br><small class="text-muted">juan.perez@gmail.com</small></td>
+                                    <td>Dr. Carlos Rojas</td>
+                                    <td><span class="badge bg-success">Activo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>María Tapia</td>
+                                    <td>19.876.543-2</td>
+                                    <td>+56 9 7654 3210<br><small class="text-muted">mtapia@gmail.com</small></td>
+                                    <td>Dra. Andrea Silva</td>
+                                    <td><span class="badge bg-success">Activo</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -107,7 +161,55 @@
         </div>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- VENTANA EMERGENTE (MODAL) PARA EL HISTORIAL DEL PACIENTE -->
+    <div class="modal fade" id="modalHistorialPaciente" tabindex="-1" aria-labelledby="modalHistorialLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-nutri text-white">
+                    <h5 class="modal-title" id="modalHistorialLabel">Ficha Clínica: <span id="modalNombrePaciente"></span></h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="text-nutri border-bottom pb-2 fw-bold">Datos Personales Básicos</h6>
+                    <ul class="list-unstyled mb-3 small">
+                        <li><strong>RUT:</strong> <span id="modalRutPaciente"></span></li>
+                        <li><strong>Teléfono:</strong> <span id="modalTelPaciente"></span></li>
+                        <li><strong>Correo:</strong> <span id="modalCorreoPaciente"></span></li>
+                    </ul>
+
+                    <h6 class="text-nutri border-bottom pb-2 fw-bold">Últimas Mediciones</h6>
+                    <div class="row text-center mb-3">
+                        <div class="col-4">
+                            <div class="p-2 bg-light rounded border">
+                                <small class="text-muted d-block">Peso</small>
+                                <strong id="modalPesoPaciente">--</strong>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 bg-light rounded border">
+                                <small class="text-muted d-block">IMC</small>
+                                <strong id="modalImcPaciente">--</strong>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 bg-light rounded border">
+                                <small class="text-muted d-block">Cintura</small>
+                                <strong id="modalCinturaPaciente">--</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h6 class="text-nutri border-bottom pb-2 fw-bold">Plan Alimenticio / Dieta Asignada</h6>
+                    <p class="small bg-light p-3 rounded border" id="modalDietaPaciente"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/funciones.js"></script>
 </body>
 </html>
