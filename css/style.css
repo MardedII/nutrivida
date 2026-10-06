@@ -1,0 +1,113 @@
+:root {
+    --nutri-primary: #1e7e34;
+    --nutri-dark: #145a23;
+    --nutri-light: #f0fdf4;
+    --nutri-accent: #20c997;
+    --nutri-border: #d1fae5;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: #f4f6f8;
+    color: #334155;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+.bg-nutri {
+    background: linear-gradient(135deg, var(--nutri-primary), var(--nutri-dark)) !important;
+    box-shadow: 0 4px 12px rgba(20, 90, 35, 0.15);
+}
+
+.text-nutri {
+    color: var(--nutri-primary) !important;
+}
+
+/* HERO SECTION */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), 
+                url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=1350&q=80');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 90px 0;
+}
+
+/* MAPA INTERACTIVO */
+#map {
+    height: 380px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* TARJETAS Y CONTENEDORES */
+.card-custom {
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    overflow: hidden;
+}
+
+.card-custom:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top-custom {
+    height: 190px;
+    object-fit: cover;
+    width: 100%;
+}
+
+/* FOTOS DE NUTRICIONISTAS (190px CON ROSTRO CENTRADO) */
+.avatar-doctor {
+    width: 190px;
+    height: 190px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 50%;
+    border: 5px solid var(--nutri-light);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    transition: transform 0.3s ease;
+}
+
+.avatar-doctor:hover {
+    transform: scale(1.05);
+}
+
+.avatar-sm {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 50%;
+}
+
+.badge-status {
+    padding: 0.4em 0.8em;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.btn-nutri {
+    background-color: var(--nutri-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 0.6rem 1.2rem;
+}
+
+.btn-nutri:hover {
+    background-color: var(--nutri-dark);
+    color: white;
+}

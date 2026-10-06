@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - Clínica NutriVida</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-nutri sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="index.html">
+                <i class="bi bi-heart-pulse-fill fs-3"></i> NutriVida
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-2">
+                    <li class="nav-item"><a class="nav-link active" href="index.html"><i class="bi bi-house-door-fill"></i> Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="paginas/contacto.html"><i class="bi bi-geo-alt-fill"></i> Ubicación</a></li>
+                    <li class="nav-item"><a class="btn btn-outline-light btn-sm" href="paginas/login.html"><i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión</a></li>
+                    <li class="nav-item"><a class="btn btn-light text-success btn-sm fw-bold" href="paginas/registro.html"><i class="bi bi-person-plus-fill"></i> Registrarse</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="hero-section text-center">
+            <div class="container">
+                <h1 class="display-3 fw-bold mb-3">Clínica Nutricional NutriVida</h1>
+                <p class="lead fs-4 mb-4">Atención experta y planes personalizados en Temuco.</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="paginas/registro.html" class="btn btn-success btn-lg px-4 py-2"><i class="bi bi-calendar-check me-2"></i>Agendar Cita</a>
+                    <a href="paginas/contacto.html" class="btn btn-outline-light btn-lg px-4 py-2"><i class="bi bi-map me-2"></i>Ver Ubicación</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container my-5 py-3">
+            <h2 class="text-center fw-bold text-nutri mb-4">Especialidades Médicas</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card card-custom h-100">
+                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80" class="card-img-top-custom" alt="Control de Peso">
+                        <div class="card-body p-4 text-center">
+                            <h5 class="fw-bold text-nutri">Control de Peso</h5>
+                            <p class="text-secondary small">Reducción de grasa corporal mediante hábitos sostenibles sin dietas restrictivas.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-custom h-100">
+                        <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=600&q=80" class="card-img-top-custom" alt="Salud Metabólica">
+                        <div class="card-body p-4 text-center">
+                            <h5 class="fw-bold text-nutri">Salud Metabólica</h5>
+                            <p class="text-secondary small">Manejo de resistencia a la insulina, diabetes, hipertensión y dislipidemias.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-custom h-100">
+                        <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80" class="card-img-top-custom" alt="Nutrición Deportiva">
+                        <div class="card-body p-4 text-center">
+                            <h5 class="fw-bold text-nutri">Nutrición Deportiva</h5>
+                            <p class="text-secondary small">Optimización del rendimiento, ganancia de masa muscular y recuperación atleta.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-light py-5">
+            <div class="container my-3">
+                <h2 class="text-center fw-bold text-nutri mb-4">Nuestros 3 Nutricionistas</h2>
+                <div class="row g-4 justify-content-center">
+                    <div class="col-md-4">
+                        <div class="card card-custom p-4 text-center h-100 shadow-sm">
+                            <img src="img/1nutri.jpg" class="avatar-doctor mx-auto mb-3" alt="Dra. María González">
+                            <h4 class="fw-bold mb-1">Dra. María González</h4>
+                            <p class="badge bg-success bg-opacity-10 text-success fw-bold mx-auto mb-2 px-3 py-1">Pérdida de Peso</p>
+                            <p class="text-muted small">Especialista en reeducación alimentaria y composición corporal.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-custom p-4 text-center h-100 shadow-sm">
+                            <img src="img/2nutri.png" class="avatar-doctor mx-auto mb-3" alt="Dr. Carlos Rojas">
+                            <h4 class="fw-bold mb-1">Dr. Carlos Rojas</h4>
+                            <p class="badge bg-primary bg-opacity-10 text-primary fw-bold mx-auto mb-2 px-3 py-1">Control Metabólico</p>
+                            <p class="text-muted small">Manejo de pacientes con resistencia a la insulina y patologías.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-custom p-4 text-center h-100 shadow-sm">
+                            <img src="img/3nutri.png" class="avatar-doctor mx-auto mb-3" alt="Dra. Andrea Silva">
+                            <h4 class="fw-bold mb-1">Dra. Andrea Silva</h4>
+                            <p class="badge bg-warning bg-opacity-10 text-dark fw-bold mx-auto mb-2 px-3 py-1">Nutrición Deportiva</p>
+                            <p class="text-muted small">Pautas nutricionales para rendimiento físico y masa muscular.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container my-5">
+            <div class="row align-items-center bg-white p-4 rounded shadow-sm">
+                <div class="col-md-5 mb-4 mb-md-0">
+                    <h3 class="fw-bold text-nutri mb-3"><i class="bi bi-geo-alt-fill text-danger me-2"></i>Ubicación de la Clínica</h3>
+                    <p><strong>Dirección:</strong> Av. Alemania #0855, Temuco, Región de La Araucanía.</p>
+                    <p><strong>Teléfono:</strong> +56 45 2 123456</p>
+                    <p><strong>Atención:</strong> Lunes a Viernes de 09:00 a 18:00 hrs.</p>
+                </div>
+                <div class="col-md-7">
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-4">
+        <div class="container">
+            <p class="mb-0 small">© 2026 Clínica Nutricional NutriVida - Proyecto DSY1104</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/validaciones.js"></script>
+    <script src="js/funciones.js"></script>
+</body>
+</html>
