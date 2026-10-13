@@ -28,7 +28,6 @@ main {
     color: var(--nutri-primary) !important;
 }
 
-/* HERO SECTION */
 .hero-section {
     background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), 
                 url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=1350&q=80');
@@ -38,7 +37,6 @@ main {
     padding: 90px 0;
 }
 
-/* MAPA INTERACTIVO */
 #map {
     height: 380px;
     width: 100%;
@@ -46,7 +44,6 @@ main {
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-/* TARJETAS Y CONTENEDORES */
 .card-custom {
     border: 1px solid rgba(0, 0, 0, 0.05);
     border-radius: 14px;
@@ -61,13 +58,6 @@ main {
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
-.card-img-top-custom {
-    height: 190px;
-    object-fit: cover;
-    width: 100%;
-}
-
-/* FOTOS DE NUTRICIONISTAS (190px CON ROSTRO CENTRADO) */
 .avatar-doctor {
     width: 190px;
     height: 190px;
@@ -110,4 +100,11 @@ main {
 .btn-nutri:hover {
     background-color: var(--nutri-dark);
     color: white;
+}
+
+.img-nutri-card {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
 }
