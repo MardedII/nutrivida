@@ -8,6 +8,16 @@ export default function Agendar() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // La fecha de una cita no puede ser anterior al día actual.
+        const hoy = new Date();
+        hoy.setHours(0, 0, 0, 0);
+        const fechaSeleccionada = new Date(`${form.fecha}T00:00:00`);
+        if (!form.fecha || Number.isNaN(fechaSeleccionada.getTime()) || fechaSeleccionada < hoy) {
+            alert('Seleccione una fecha válida, igual o posterior al día de hoy.');
+            return;
+        }
+
         const nuevaCita = {
             id: Date.now(),
             paciente: form.nombre,
@@ -34,12 +44,12 @@ export default function Agendar() {
                         <h4 className="card-title text-nutri mb-3"><i className="bi bi-calendar-event me-2"></i>Solicitar Nueva Cita</h4>
                         <form onSubmit={handleSubmit}>
                             <div className="mb-3">
-                                <label className="form-label">Nombre Completo del Paciente</label>
-                                <input type="text" className="form-control" value={form.nombre} onChange={e => setForm({...form, nombre: e.target.value})} required />
+                                <label className="form-label" htmlFor="agendar-nombre">Nombre Completo del Paciente</label>
+                                <input type="text" id="agendar-nombre" className="form-control" value={form.nombre} onChange={e => setForm({...form, nombre: e.target.value})} required />
                             </div>
                             <div className="mb-3">
-                                <label className="form-label">Seleccionar Nutricionista</label>
-                                <select className="form-select" value={form.nutricionista} onChange={e => setForm({...form, nutricionista: e.target.value})} required>
+                                <label className="form-label" htmlFor="agendar-nutricionista">Seleccionar Nutricionista</label>
+                                <select id="agendar-nutricionista" className="form-select" value={form.nutricionista} onChange={e => setForm({...form, nutricionista: e.target.value})} required>
                                     <option value="" disabled>Elija un profesional...</option>
                                     <option value="Dra. María González">Dra. María González (Pérdida de Peso)</option>
                                     <option value="Dr. Carlos Rojas">Dr. Carlos Rojas (Control Metabólico)</option>
@@ -48,17 +58,17 @@ export default function Agendar() {
                                 </select>
                             </div>
                             <div className="mb-3">
-                                <label className="form-label">Motivo de la Consulta</label>
-                                <textarea className="form-control" rows="2" value={form.motivo} onChange={e => setForm({...form, motivo: e.target.value})} required></textarea>
+                                <label className="form-label" htmlFor="agendar-motivo">Motivo de la Consulta</label>
+                                <textarea id="agendar-motivo" className="form-control" rows="2" value={form.motivo} onChange={e => setForm({...form, motivo: e.target.value})} required></textarea>
                             </div>
                             <div className="row">
                                 <div className="col-6 mb-3">
-                                    <label className="form-label">Fecha</label>
-                                    <input type="date" className="form-control" value={form.fecha} onChange={e => setForm({...form, fecha: e.target.value})} required />
+                                    <label className="form-label" htmlFor="agendar-fecha">Fecha</label>
+                                    <input type="date" id="agendar-fecha" className="form-control" min={new Date().toISOString().split("T")[0]} value={form.fecha} onChange={e => setForm({...form, fecha: e.target.value})} required />
                                 </div>
                                 <div className="col-6 mb-3">
-                                    <label className="form-label">Hora</label>
-                                    <input type="time" className="form-control" value={form.hora} onChange={e => setForm({...form, hora: e.target.value})} required />
+                                    <label className="form-label" htmlFor="agendar-hora">Hora</label>
+                                    <input type="time" id="agendar-hora" className="form-control" value={form.hora} onChange={e => setForm({...form, hora: e.target.value})} required />
                                 </div>
                             </div>
                             <button type="submit" className="btn btn-success w-100 mt-2">

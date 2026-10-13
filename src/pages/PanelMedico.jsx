@@ -48,6 +48,12 @@ export default function PanelMedico() {
     // Lógica equivalente a agregarEvaluacionMedico()
     const handleGuardarFicha = (e) => {
         e.preventDefault();
+
+        if (pesoNum <= 0 || tallaNum <= 0) {
+            alert('El peso y la talla deben ser mayores que cero.');
+            return;
+        }
+
         const nuevaFicha = {
             nombre: selectPaciente,
             fecha: new Date().toLocaleDateString('es-CL'),
@@ -115,8 +121,9 @@ export default function PanelMedico() {
                         <h4>Registrar Ficha Clínica</h4>
                         <form onSubmit={handleGuardarFicha}>
                             <div className="mb-3">
-                                <label className="form-label">Paciente Asignado</label>
+                                <label className="form-label" htmlFor="ficha-paciente">Paciente Asignado</label>
                                 <select 
+                                    id="ficha-paciente"
                                     className="form-select" 
                                     value={selectPaciente} 
                                     onChange={(e) => setSelectPaciente(e.target.value)} 
@@ -130,9 +137,11 @@ export default function PanelMedico() {
 
                             <div className="row">
                                 <div className="col-md-4 mb-3">
-                                    <label className="form-label">Peso (kg)</label>
+                                    <label className="form-label" htmlFor="ficha-peso">Peso (kg)</label>
                                     <input 
                                         type="number" 
+                                        id="ficha-peso"
+                                        min="0.1"
                                         step="0.1" 
                                         className="form-control" 
                                         value={peso} 
@@ -141,9 +150,11 @@ export default function PanelMedico() {
                                     />
                                 </div>
                                 <div className="col-md-4 mb-3">
-                                    <label className="form-label">Talla (cm)</label>
+                                    <label className="form-label" htmlFor="ficha-talla">Talla (cm)</label>
                                     <input 
                                         type="number" 
+                                        id="ficha-talla"
+                                        min="1"
                                         className="form-control" 
                                         value={talla} 
                                         onChange={(e) => setTalla(e.target.value)} 
@@ -151,9 +162,11 @@ export default function PanelMedico() {
                                     />
                                 </div>
                                 <div className="col-md-4 mb-3">
-                                    <label className="form-label">Cintura (cm)</label>
+                                    <label className="form-label" htmlFor="ficha-cintura">Cintura (cm)</label>
                                     <input 
                                         type="number" 
+                                        id="ficha-cintura"
+                                        min="0"
                                         className="form-control" 
                                         value={cintura} 
                                         onChange={(e) => setCintura(e.target.value)} 
@@ -169,8 +182,9 @@ export default function PanelMedico() {
                             </p>
 
                             <div className="mb-3">
-                                <label className="form-label">Plan Alimenticio / Indicaciones</label>
+                                <label className="form-label" htmlFor="ficha-indicaciones">Plan Alimenticio / Indicaciones</label>
                                 <textarea 
+                                    id="ficha-indicaciones"
                                     className="form-control" 
                                     rows="3" 
                                     placeholder="3 comidas principales, proteínas altas..."

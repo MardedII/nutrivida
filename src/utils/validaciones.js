@@ -106,6 +106,13 @@ export function validarRegistro(nombre, rut, correo, telefono, fechaNac, genero,
     // Control de fecha y edad mínima (14 años)
     const fechaNacDate = new Date(fechaNac);
     const hoy = new Date();
+
+    // Rechaza fechas que el navegador/usuario no pueda interpretar.
+    if (Number.isNaN(fechaNacDate.getTime())) {
+        alert("La fecha de nacimiento no es válida.");
+        return false;
+    }
+
     if (fechaNacDate >= hoy) {
         alert("La fecha de nacimiento no puede ser la fecha actual ni una fecha futura.");
         return false;
