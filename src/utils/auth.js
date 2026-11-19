@@ -5,6 +5,10 @@ const APPOINTMENTS_KEY = 'nutrivida_citas';
 const PERMISSIONS_KEY = 'nutrivida_permisos';
 const ABSENCES_KEY = 'nutrivida_faltas';
 
+// ==========================================
+// USUARIOS PREDETERMINADOS DE NUTRIVIDA
+// ==========================================
+
 const usuariosIniciales = [
     {
         id: 1,
@@ -24,6 +28,8 @@ const usuariosIniciales = [
         telefono: '+56 9 1234 5678',
         clave: 'Nutri123!',
         rol: 'nutricionista',
+        especialidad: 'Pérdida de Peso',
+        imagen: '/img/1nutri.jpg',
         activo: true
     },
     {
@@ -35,53 +41,190 @@ const usuariosIniciales = [
         clave: 'Paciente123!',
         rol: 'paciente',
         activo: true
+    },
+    {
+        id: 101,
+        nombre: 'Dr. Carlos Rojas',
+        rut: '15.432.109-8',
+        correo: 'c.rojas@nutrivida.cl',
+        telefono: '+56 9 8765 4321',
+        clave: 'Nutri123!',
+        rol: 'nutricionista',
+        especialidad: 'Salud Metabólica',
+        imagen: '/img/2nutri.png',
+        activo: true
+    },
+    {
+        id: 102,
+        nombre: 'Dra. Andrea Silva',
+        rut: '19.876.543-0',
+        correo: 'a.silva@nutrivida.cl',
+        telefono: '+56 9 7654 3210',
+        clave: 'Nutri123!',
+        rol: 'nutricionista',
+        especialidad: 'Nutrición Deportiva',
+        imagen: '/img/3nutri.png',
+        activo: true
+    },
+    {
+        id: 103,
+        nombre: 'Dr. Felipe Morales',
+        rut: '16.789.012-1',
+        correo: 'f.morales@nutrivida.cl',
+        telefono: '+56 9 6543 2109',
+        clave: 'Nutri123!',
+        rol: 'nutricionista',
+        especialidad: 'Alimentación Vegana',
+        imagen: '/img/nutri4.jpg',
+        activo: true
     }
 ];
 
+// ==========================================
+// LECTURA SEGURA DE LISTAS
+// ==========================================
+
 function leerLista(clave) {
     try {
-        const datos = JSON.parse(localStorage.getItem(clave) || '[]');
+        const datos = JSON.parse(
+            localStorage.getItem(clave) || '[]'
+        );
+
         return Array.isArray(datos) ? datos : [];
-    } catch {
+    } catch (error) {
+        console.error('Error leyendo datos:', clave, error);
         return [];
     }
 }
+
+// ==========================================
+// GESTIÓN DE USUARIOS
+// ==========================================
 
 export function obtenerUsuarios() {
     const guardados = localStorage.getItem(USERS_KEY);
 
+    // Primera ejecución: crear usuarios iniciales.
     if (!guardados) {
         guardarUsuarios(usuariosIniciales);
-        return usuariosIniciales;
+        return [...usuariosIniciales];
     }
 
+    let usuarios;
+
     try {
-        const usuarios = JSON.parse(guardados);
-        return Array.isArray(usuarios) ? usuarios : [];
-    } catch {
+        usuarios = JSON.parse(guardados);
+
+        if (!Array.isArray(usuarios)) {
+            usuarios = [];
+        }
+    } catch (error) {
+        console.error('Error leyendo usuarios:', error);
         return [];
     }
+
+    // Agregar las nuevas cuentas predeterminadas
+    // sin eliminar pacientes ni usuarios ya registrados.
+    let huboCambios = false;
+
+    const idsUtilizados = new Set(
+        usuarios.map(u => String(u.id))
+    );
+
+    usuariosIniciales.forEach(inicial => {
+        const existeCorreo = usuarios.some(
+            u =>
+                String(u.correo || '').toLowerCase() ===
+                inicial.correo.toLowerCase()
+        );
+
+        const existeRut = usuarios.some(
+            u =>
+                String(u.rut || '')
+                    .replace(/[.\-\s]/g, '')
+                    .toUpperCase() ===
+                inicial.rut
+                    .replace(/[.\-\s]/g, '')
+                    .toUpperCase()
+        );
+
+        if (!existeCorreo && !existeRut) {
+            let nuevoId = inicial.id;
+
+            
+            while (idsUtilizados.has(String(nuevoId))) {
+                nuevoId++;
+            }
+                
+            usuarios.push({
+                ...inicial,
+                id: nuevoId
+            });
+
+            idsUtilizados.add(String(nuevoId));
+            huboCambios = true;
+        }
+    });
+
+    if (huboCambios) {
+        guardarUsuarios(usuarios);
+    }
+
+    return usuarios;
 }
 
 export function guardarUsuarios(usuarios) {
-    localStorage.setItem(USERS_KEY, JSON.stringify(usuarios));
+    localStorage.setItem(
+        USERS_KEY,
+        JSON.stringify(usuarios)
+    );
 }
+
+// ==========================================
+// SESIONES
+// ==========================================
 
 export function obtenerSesion() {
     try {
         const datos = localStorage.getItem(SESSION_KEY);
-        return datos ? JSON.parse(datos) : null;
-    } catch {
+
+        if (!datos) return null;
+
+        const sesion = JSON.parse(datos);
+
+        // Comprobar que el usuario todavía exista,
+        // esté activo y tenga el rol registrado.
+        const usuarioActual = obtenerUsuarios().find(
+            u => String(u.id) === String(sesion.id)
+        );
+
+        if (!usuarioActual || !usuarioActual.activo) {
+            localStorage.removeItem(SESSION_KEY);
+            return null;
+        }
+
+        return {
+            id: usuarioActual.id,
+            nombre: usuarioActual.nombre,
+            correo: usuarioActual.correo,
+            rol: usuarioActual.rol
+        };
+
+    } catch (error) {
+        console.error('Error obteniendo sesión:', error);
         return null;
     }
 }
 
 export function iniciarSesion(correo, clave) {
-    const usuario = obtenerUsuarios().find(
+    const usuarios = obtenerUsuarios();
+
+    const usuario = usuarios.find(
         u =>
-            u.correo.toLowerCase() === correo.trim().toLowerCase() &&
+            String(u.correo || '').toLowerCase() ===
+                String(correo || '').trim().toLowerCase() &&
             u.clave === clave &&
-            u.activo
+            u.activo === true
     );
 
     if (!usuario) return null;
@@ -93,7 +236,11 @@ export function iniciarSesion(correo, clave) {
         rol: usuario.rol
     };
 
-    localStorage.setItem(SESSION_KEY, JSON.stringify(sesion));
+    localStorage.setItem(
+        SESSION_KEY,
+        JSON.stringify(sesion)
+    );
+
     return sesion;
 }
 
@@ -101,33 +248,63 @@ export function cerrarSesion() {
     localStorage.removeItem(SESSION_KEY);
 }
 
+// ==========================================
+// REGISTRO DE PACIENTES
+// ==========================================
+
 export function registrarPaciente(datos) {
     const usuarios = obtenerUsuarios();
 
+    const correoNormalizado =
+        String(datos.correo || '').trim().toLowerCase();
+
+    const rutNormalizado =
+        String(datos.rut || '')
+            .replace(/[.\-\s]/g, '')
+            .toUpperCase();
+
     const correoExiste = usuarios.some(
-        u => u.correo.toLowerCase() === datos.correo.trim().toLowerCase()
-    );
-
-    const normalizarRut = rut =>
-        String(rut).replace(/[.\-\s]/g, '').toUpperCase();
-
-    const rutExiste = usuarios.some(
-        u => normalizarRut(u.rut) === normalizarRut(datos.rut)
+        u =>
+            String(u.correo || '').toLowerCase() ===
+            correoNormalizado
     );
 
     if (correoExiste) {
-        return { ok: false, mensaje: 'Este correo ya está registrado.' };
+        return {
+            ok: false,
+            mensaje: 'Este correo ya está registrado.'
+        };
     }
+
+    const rutExiste = usuarios.some(
+        u =>
+            String(u.rut || '')
+                .replace(/[.\-\s]/g, '')
+                .toUpperCase() === rutNormalizado
+    );
 
     if (rutExiste) {
-        return { ok: false, mensaje: 'Este RUT ya está registrado.' };
+        return {
+            ok: false,
+            mensaje: 'Este RUT ya está registrado.'
+        };
     }
 
+    // Identificador único para el nuevo paciente.
+    const idsExistentes = usuarios.map(usuario => String(usuario.id));
+
+    let nuevoId = Date.now();
+
+    // Comprobar que el ID no esté repetido
+    while (idsExistentes.includes(String(nuevoId))) {
+        nuevoId = nuevoId + 1;
+}
+
     const nuevoPaciente = {
-        id: Date.now(),
+        id: nuevoId,
         nombre: datos.nombre.trim(),
         rut: datos.rut.trim(),
-        correo: datos.correo.trim().toLowerCase(),
+        correo: correoNormalizado,
         telefono: datos.telefono.trim(),
         fechaNac: datos.fechaNac,
         genero: datos.genero,
@@ -136,34 +313,63 @@ export function registrarPaciente(datos) {
         activo: true
     };
 
-    guardarUsuarios([...usuarios, nuevoPaciente]);
-    return { ok: true };
+    guardarUsuarios([
+        ...usuarios,
+        nuevoPaciente
+    ]);
+
+    return {
+        ok: true,
+        usuario: {
+            id: nuevoPaciente.id,
+            nombre: nuevoPaciente.nombre,
+            correo: nuevoPaciente.correo,
+            rol: nuevoPaciente.rol
+        }
+    };
 }
+
+// ==========================================
+// GESTIÓN DE CITAS
+// ==========================================
 
 export function obtenerCitas() {
     return leerLista(APPOINTMENTS_KEY);
 }
 
 export function guardarCitas(citas) {
-    localStorage.setItem(APPOINTMENTS_KEY, JSON.stringify(citas));
+    localStorage.setItem(
+        APPOINTMENTS_KEY,
+        JSON.stringify(citas)
+    );
 }
 
-// SOLICITUDES DE PERMISO DE NUTRICIONISTAS
+// ==========================================
+// SOLICITUDES DE PERMISOS
+// ==========================================
 
 export function obtenerPermisos() {
     return leerLista(PERMISSIONS_KEY);
 }
 
 export function guardarPermisos(permisos) {
-    localStorage.setItem(PERMISSIONS_KEY, JSON.stringify(permisos));
+    localStorage.setItem(
+        PERMISSIONS_KEY,
+        JSON.stringify(permisos)
+    );
 }
 
-// FALTAS LABORALES REGISTRADAS POR ADMINISTRACIÓN
+// ==========================================
+// FALTAS LABORALES
+// ==========================================
 
 export function obtenerFaltas() {
     return leerLista(ABSENCES_KEY);
 }
 
 export function guardarFaltas(faltas) {
-    localStorage.setItem(ABSENCES_KEY, JSON.stringify(faltas));
+    localStorage.setItem(
+        ABSENCES_KEY,
+        JSON.stringify(faltas)
+    );
 }
