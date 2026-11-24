@@ -1,0 +1,9 @@
+2026-11-24 06:43:18.364350-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PACIENTES" not found (this database is empty); SQL statement:
+INSERT INTO pacientes (id, usuario_id, nombre, rut, correo, telefono, activo, fecha_nac, genero) SELECT 920003, 910003, 'Camila Silva', '187654327', 'camila.silva@gmail.com', '+56 991234567', TRUE, DATE '1998-05-12', 'Femenino' WHERE NOT EXISTS (SELECT 1 FROM pacientes WHERE id = 920003) [42104-252]
+2026-11-24 06:49:01.544789-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PACIENTES" not found (this database is empty); SQL statement:
+INSERT INTO pacientes (id, usuario_id, nombre, rut, correo, telefono, activo, fecha_nac, genero) SELECT 920003, 910003, 'Camila Silva', '187654327', 'camila.silva@gmail.com', '+56 991234567', TRUE, DATE '1998-05-12', 'Femenino' WHERE NOT EXISTS (SELECT 1 FROM pacientes WHERE id = 920003) [42104-252]
+2026-11-24 06:50:29.576116-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PACIENTES" not found (this database is empty); SQL statement:
+INSERT INTO pacientes (id, usuario_id, nombre, rut, correo, telefono, activo, fecha_nac, genero) SELECT 920003, 910003, 'Camila Silva', '187654327', 'camila.silva@gmail.com', '+56 991234567', TRUE, DATE '1998-05-12', 'Femenino' WHERE NOT EXISTS (SELECT 1 FROM pacientes WHERE id = 920003) [42104-252]
